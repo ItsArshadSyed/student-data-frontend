@@ -10,8 +10,8 @@ async function get<T>(p: string): Promise<T> {
       throw new Error(`GET ${url} -> ${r.status} ${r.statusText}${text ? ` :: ${text}` : ""}`);
     }
     return r.json();
-  } catch (err:any) {
-    console.error("GET failed:", url, err?.message || err);
+  } catch (err) {
+    console.error("GET failed:", url, (err as Error)?.message || err);
     throw err;
   }
 }
@@ -28,8 +28,8 @@ async function patch<T>(p: string, body: unknown): Promise<T> {
       throw new Error(`PATCH ${url} -> ${r.status} ${r.statusText}${text ? ` :: ${text}` : ""}`);
     }
     return r.json();
-  } catch (err:any) {
-    console.error("PATCH failed:", url, err?.message || err);
+  } catch (err) {
+    console.error("PATCH failed:", url, (err as Error)?.message || err);
     throw err;
   }
 }
@@ -46,8 +46,8 @@ async function post<T>(p: string, body: unknown): Promise<T> {
       throw new Error(`POST ${url} -> ${r.status} ${r.statusText}${text ? ` :: ${text}` : ""}`);
     }
     return r.json();
-  } catch (err:any) {
-    console.error("POST failed:", url, err?.message || err);
+  } catch (err) {
+    console.error("POST failed:", url, (err as Error)?.message || err);
     throw err;
   }
 }
