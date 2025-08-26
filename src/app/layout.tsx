@@ -22,16 +22,19 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen grid grid-cols-[240px_1fr] grid-rows-[56px_1fr]`}>
-        <aside className="row-span-2 border-r">
+      {/* w-screen + overflow-x-hidden prevent page-wide horizontal scroll.
+          grid stays the same; min-w-0 is added on <main> below. */}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen w-screen overflow-x-hidden grid grid-cols-[200px_40px_1fr] grid-rows-[56px_1fr]`}>
+        <aside className="row-span-2 col-start-1 border-r">
           <Sidebar />
         </aside>
-        <header className="border-b">
+        <header className="col-start-3 border-b pl-6 pr-8">
           <TopNav />
         </header>
-        <main className="p-6">
+        {/* min-w-0 lets content shrink inside this grid column instead of pushing page width */}
+        <main className="col-start-3 p-6 pl-12 pr-16">
           {children}
-        </main>
+        </main> 
       </body>
     </html>
   );

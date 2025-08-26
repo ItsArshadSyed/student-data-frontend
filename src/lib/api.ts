@@ -55,14 +55,25 @@ async function post<T>(p: string, body: unknown): Promise<T> {
 export type Course = { courseId:string; courseName:string; creditUnits:number; letterGrade?:string; gradePoints?:number };
 export type Assignment = { assignmentId:string; courseId:string; title:string; status:"Completed"|"Ongoing"; dueDate:string };
 export type Cgpa = { cgpa:number; sumWeighted:number; sumCredits:number; formula:string };
-export type Dashboard = {
-  totalCourses:number; completedAssignments:number; ongoingAssignments:number;
-  currentCgpa:number; upcomingDueCount:number; nextDue?: Assignment|null
+
+// New dashboard shape for the 3-panel layout
+export type DashboardResponse = {
+  personal: { name: string; id: string; phone: string; email: string };
+  degreeProgress: { bachelors: string; discipline: string; joinDate: string };
+  graduation: { email: string; phone: string; alternateEmail: string; address: string };
+  adminNotifications: {
+    feePayment: string;
+    lastDate: string;
+    uploadCertificate: boolean | string;
+    pendingStatus: string;
+  };
+  transfer: { title: string; value: string }[];
 };
+
 export type Profile = { studentId:string; name:string; email:string; phone?:string; semester?:string };
 
 export const api = {
-  dashboard: () => get<Dashboard>("/dashboard"),
+  dashboard: () => get<DashboardResponse>("/dashboard"),
   courses: () => get<{items: Course[]; total: number}>("/courses"),
   cgpa: () => get<Cgpa>("/cgpa"),
   assignments: (q="") => get<{items: Assignment[]; total: number}>(`/assignments${q}`),
